@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    blogs: Blog;
     users: User;
     media: Media;
     'payload-kv': PayloadKv;
@@ -76,6 +77,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    blogs: BlogsSelect<false> | BlogsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -116,6 +118,139 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs".
+ */
+export interface Blog {
+  id: string;
+  /**
+   * URL-friendly e.g. graphs-in-discrete-mathematics
+   */
+  slug: string;
+  title: string;
+  subtitle?: string | null;
+  /**
+   * e.g. September 6, 2023
+   */
+  date: string;
+  category:
+    | 'Arithmetic'
+    | 'Algebra'
+    | 'Geometry'
+    | 'Logic'
+    | 'Number Theory'
+    | 'Probability'
+    | 'Formula'
+    | 'Financial'
+    | 'History'
+    | 'Resources'
+    | 'Competitions'
+    | 'Tips'
+    | 'Education'
+    | 'Parenting'
+    | 'Technology'
+    | 'General'
+    | 'Quiz'
+    | 'Discrete Mathematics'
+    | 'Aptitude'
+    | 'Reasoning';
+  /**
+   * e.g. /assets/img/blogs/placeholders/arithmetic.png
+   */
+  thumbnail: string;
+  content?:
+    | {
+        type:
+          | 'paragraph'
+          | 'heading'
+          | 'image'
+          | 'list'
+          | 'callout'
+          | 'grid'
+          | 'visual-list'
+          | 'comparison-table'
+          | 'quiz'
+          | 'iframe';
+        content?: string | null;
+        /**
+         * Optional Tailwind classes
+         */
+        styling?: string | null;
+        level?: ('2' | '3') | null;
+        /**
+         * Image path or iframe URL
+         */
+        src?: string | null;
+        alt?: string | null;
+        caption?: string | null;
+        listType?: ('unordered' | 'ordered') | null;
+        items?:
+          | {
+              text?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        theme?: ('pink' | 'dark' | 'blue' | 'yellow' | 'pills' | 'cards' | 'numbers') | null;
+        /**
+         * Optional title for callout
+         */
+        calloutTitle?: string | null;
+        columns?: number | null;
+        gridItems?:
+          | {
+              title?: string | null;
+              content?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        visualItems?:
+          | {
+              label?: string | null;
+              value?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        tableHeader?:
+          | {
+              text?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        tableRows?:
+          | {
+              col1?: string | null;
+              col2?: string | null;
+              col3?: string | null;
+              col4?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        questions?:
+          | {
+              id?: number | null;
+              question?: string | null;
+              image?: string | null;
+              options?:
+                | {
+                    text?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              answer?: string | null;
+              explanation?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Linked Notion page ID — do not edit
+   */
+  notionId?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -186,6 +321,10 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'blogs';
+        value: string | Blog;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -234,6 +373,87 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blogs_select".
+ */
+export interface BlogsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  subtitle?: T;
+  date?: T;
+  category?: T;
+  thumbnail?: T;
+  content?:
+    | T
+    | {
+        type?: T;
+        content?: T;
+        styling?: T;
+        level?: T;
+        src?: T;
+        alt?: T;
+        caption?: T;
+        listType?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        theme?: T;
+        calloutTitle?: T;
+        columns?: T;
+        gridItems?:
+          | T
+          | {
+              title?: T;
+              content?: T;
+              id?: T;
+            };
+        visualItems?:
+          | T
+          | {
+              label?: T;
+              value?: T;
+              id?: T;
+            };
+        tableHeader?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        tableRows?:
+          | T
+          | {
+              col1?: T;
+              col2?: T;
+              col3?: T;
+              col4?: T;
+              id?: T;
+            };
+        questions?:
+          | T
+          | {
+              id?: T;
+              question?: T;
+              image?: T;
+              options?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              answer?: T;
+              explanation?: T;
+            };
+        id?: T;
+      };
+  notionId?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
