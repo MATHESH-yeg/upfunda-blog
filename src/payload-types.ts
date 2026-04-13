@@ -245,10 +245,6 @@ export interface Blog {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Linked Notion page ID — do not edit
-   */
-  notionId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -451,7 +447,6 @@ export interface BlogsSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  notionId?: T;
   updatedAt?: T;
   createdAt?: T;
 }

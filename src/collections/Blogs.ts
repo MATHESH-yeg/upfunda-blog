@@ -270,15 +270,5 @@ export const Blogs: CollectionConfig = {
         
       ],
     },
-    // 👇 ADD THIS at the end
-    {
-      name: 'notionId',
-      type: 'text',
-      unique: true,
-      admin: {
-        readOnly: true,
-        description: 'Linked Notion page ID — do not edit',
-      },
-    },
   ],  // closes fields
 }     // closes Blogs
